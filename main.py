@@ -6,21 +6,55 @@
     5. Incorporate last game's stats as well to see hot-streaks
 """
 
+import bs4
+
 SALARY_CAP = 10000
 ROSTER_SIZE = 8
 
 
-class Player(name, points, salary):
-    pass
+class Player():
+    def __init__(self, name, points, salary, team):
+        self.name = name
+        self.points = points
+        self.salary = salary
+        self.team = team
+
+    def __str__(self):
+        return self.name
 
 
-class Pool(players=None):
-    pass
+class Pool():
+    def __init__(self, players=None):
+        self.players = players
+        if players is None:
+            self.players = []
+
+    def addPlayer(self, player):
+        self.players.append(player)
+
+    def __str__(self):
+        return ", ".join([player.name for player in self.players])
 
 
-class Roster(players=None):
-    pass
+class Roster():
+    def __init__(self, players):
+        self.players = players
 
 
 if __name__ == '__main__':
-    print 'called'
+    vulcun_site = bs4.BeautifulSoup(open('example.html'), 'html.parser')
+
+    # players = [player.attrs.get('id') for player in vulcun_site.select('.addplayer')]
+
+    pool = Pool()
+    # players = []
+    for player in vulcun_site.select('.addplayer'):
+        name = player.select('.player-name')[0].string
+        points = float(player.select('.player-season_avg')[0].string)
+        salary = int(player.select('.player-price')[0].string[1:])
+        team = player.select('.player-team-name')[0].string
+
+        # players.append(Player(name, points, salary, team))
+        pool.addPlayer(Player(name, points, salary, team))
+
+    print pool
