@@ -23,22 +23,39 @@ class Player():
         return self.name
 
 
-class Pool():
-    def __init__(self, players=None):
-        self.players = players
-        if players is None:
-            self.players = []
+class Roster():
+    size = ROSTER_SIZE
+    salary = SALARY_CAP
 
-    def addPlayer(self, player):
+    def __init__(self, players=[]):
+        self.players = players
+
+    def add_player(self, player):
+        # if player.__class__.__name__ not 'Player':
+        if not isinstance(player, Player):
+            raise TypeError("Must be of type 'Player', instead received " + str(player.__class__.__name__))
+        if len(self.players) >= ROSTER_SIZE:
+            pass
+        else self.players.append(player)
+
+
+class Pool():
+    def __init__(self, players=[]):
+        self.players = players
+        # if players is None:
+        #     self.players = []
+
+    def add_player(self, player):
         self.players.append(player)
+
+    def buildRosters(self):
+        """
+        Create all valid permutations of the pool
+        """
+        print self.players
 
     def __str__(self):
         return ", ".join([player.name for player in self.players])
-
-
-class Roster():
-    def __init__(self, players):
-        self.players = players
 
 
 if __name__ == '__main__':
@@ -47,14 +64,18 @@ if __name__ == '__main__':
     # players = [player.attrs.get('id') for player in vulcun_site.select('.addplayer')]
 
     pool = Pool()
-    # players = []
+
     for player in vulcun_site.select('.addplayer'):
         name = player.select('.player-name')[0].string
         points = float(player.select('.player-season_avg')[0].string)
         salary = int(player.select('.player-price')[0].string[1:])
         team = player.select('.player-team-name')[0].string
 
-        # players.append(Player(name, points, salary, team))
-        pool.addPlayer(Player(name, points, salary, team))
+        # pool.add_player(Player(name, points, salary, team))
+        p = Player(name, points, salary, team)
+        print p
+        # print p.__class__.__name__
+        print isinstance(p, Player)
+        pool.add_player(p)
 
     print pool
