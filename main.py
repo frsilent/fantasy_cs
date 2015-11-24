@@ -36,6 +36,7 @@ class Roster():
             raise TypeError("Must be of type 'Player', instead received " + str(player.__class__.__name__))
         if len(self.players) >= ROSTER_SIZE:
             pass
+            # raise RosterException("Amount of players exceeds roster size limitation.")
         else self.players.append(player)
 
 
