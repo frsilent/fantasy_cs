@@ -7,6 +7,7 @@
 """
 
 import bs4
+import itertools
 
 SALARY_CAP = 10000
 ROSTER_SIZE = 8
@@ -40,6 +41,9 @@ class Roster():
         else:
             self.players.append(player)
 
+    def __str__(self):
+        return ", ".join([player.name for player in self.players])
+
 
 class Pool():
     def __init__(self, players=[]):
@@ -48,11 +52,17 @@ class Pool():
     def add_player(self, player):
         self.players.append(player)
 
-    def buildRosters(self):
+    def build_rosters(self):
         """
         Create all valid permutations of the pool
         """
-        print(self.players)
+        # print(self.players)
+        rosters = itertools.combinations(self.players, ROSTER_SIZE)
+        print(len(self.players))
+        # for roster in rosters:  # n! / r! / (n-r)!     //    55! / 8! / (55-8)!
+        #     print(roster)
+        # print(rosters[0])
+        # itertools.permutations(my_list, 3)
 
     def __str__(self):
         return ", ".join([player.name for player in self.players])
@@ -73,9 +83,10 @@ if __name__ == '__main__':
 
         # pool.add_player(Player(name, points, salary, team))
         p = Player(name, points, salary, team)
-        print(p)
+        # print(p)
         # print(p.__class__.__name__)
-        print(isinstance(p, Player))
+        # print(isinstance(p, Player))
         pool.add_player(p)
 
-    print(pool)
+    # print(pool)
+    pool.build_rosters()
