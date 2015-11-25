@@ -44,8 +44,6 @@ class Roster():
 class Pool():
     def __init__(self, players=[]):
         self.players = players
-        # if players is None:
-        #     self.players = []
 
     def add_player(self, player):
         self.players.append(player)
@@ -54,7 +52,7 @@ class Pool():
         """
         Create all valid permutations of the pool
         """
-        print self.players
+        print(self.players)
 
     def __str__(self):
         return ", ".join([player.name for player in self.players])
@@ -75,9 +73,9 @@ if __name__ == '__main__':
 
         # pool.add_player(Player(name, points, salary, team))
         p = Player(name, points, salary, team)
-        print p
-        # print p.__class__.__name__
-        print isinstance(p, Player)
+        print(p)
+        # print(p.__class__.__name__)
+        print(isinstance(p, Player))
         pool.add_player(p)
 
-    print pool
+    print(pool)
