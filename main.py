@@ -37,7 +37,8 @@ class Roster():
         if len(self.players) >= ROSTER_SIZE:
             pass
             # raise RosterException("Amount of players exceeds roster size limitation.")
-        else self.players.append(player)
+        else:
+            self.players.append(player)
 
 
 class Pool():
