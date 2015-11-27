@@ -54,15 +54,17 @@ class Pool():
 
     def build_rosters(self):
         """
-        Create all valid permutations of the pool
+        Create all valid permutations of the pool.
+        This brute force solution is n! / r! / (n-r)! so for now just need to get the first few rosters.
         """
-        # print(self.players)
-        rosters = itertools.combinations(self.players, ROSTER_SIZE)
-        print(len(self.players))
-        # for roster in rosters:  # n! / r! / (n-r)!     //    55! / 8! / (55-8)!
-        #     print(roster)
-        # print(rosters[0])
-        # itertools.permutations(my_list, 3)
+        # TODO:  Replace this with a sane method, ala buckets or something to optimize roster building.
+        # TODO: Should look into maybe sorting the players, maybe make a roster of the best possible past average. Then continuously remove & add until the salary/team requirements are met.
+
+        rosters = itertools.combinations_with_replacement(self.players, ROSTER_SIZE)
+
+        for i in range(0,50):  # Only using the first 50 roster possibilities for testing
+            r = (next(rosters))
+
 
     def __str__(self):
         return ", ".join([player.name for player in self.players])
@@ -90,3 +92,4 @@ if __name__ == '__main__':
 
     # print(pool)
     pool.build_rosters()
+    print('ended')
