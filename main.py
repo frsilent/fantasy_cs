@@ -45,7 +45,7 @@ class Roster:
         return ", ".join([player.name for player in self.players])
 
 
-class Pool():
+class Pool:
     def __init__(self, players=[]):
         self.players = players
 
