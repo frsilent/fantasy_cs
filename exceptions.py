@@ -11,6 +11,13 @@ class RosterFullException(Exception):
 class ObjectDoesNotExist(Exception):
     """The requested object does not exist"""
     silent_variable_failure = True
+
+
+class InvalidRosterException(Exception):
+    """Roster is invalid"""
+    pass
+
+
 #
 #
 # class MultipleObjectsReturned(Exception):
