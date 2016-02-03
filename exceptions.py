@@ -1,5 +1,6 @@
 """
 Global exception and warning classes.
+Using as an example of properly handling these: https://github.com/kennethreitz/requests/blob/master/requests/exceptions.py
 """
 
 
