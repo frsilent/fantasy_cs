@@ -22,12 +22,13 @@ class Player:
         self.points = points
         self.salary = salary
         self.team = team
+        self.value_ratio = self.calc_value_ratio()
 
-    def value_ratio(self):
+    def calc_value_ratio(self):
         return self.points / self.salary
 
     def __str__(self):
-        return self.name
+        return "{}, {}".format(self.name, self.value_ratio)
 
 
 class Roster:
@@ -39,7 +40,6 @@ class Roster:
         self.players = players
 
     def add_player(self, player):
-        print(player)
         if not isinstance(player, Player):
             raise TypeError("Must be of type 'Player', instead received " + str(player.__class__.__name__))
         if len(self.players) >= ROSTER_SIZE:
@@ -49,6 +49,17 @@ class Roster:
 
         else:
             self.players[player.name] = player
+
+    def remove_player(self, player):
+        if isinstance(player, Player):
+            self.players.remove(player.name)
+        elif type(player) is str:
+            self.players.remove(player)
+        else:
+            raise TypeError("Must be of type 'Player', instead received " + str(player.__class__.__name__))
+
+    def cost(self):
+        return sum([player.salary for player in self.players])
 
     def __str__(self):
         return ", ".join([player.name for player in self.players])
@@ -75,6 +86,15 @@ class Pool:
             # r = (next(rosters))
             r.append((next(rosters)))
 
+    def top_roster(self):
+        """
+        Will give the best possible roster based on highest player values while still in cost constraints
+        """
+        self.players.sort(key=lambda x: x.value_ratio, reverse=True)
+        roster = Roster(self.players[:ROSTER_SIZE])
+        print(roster.cost())
+
+
 
     def __str__(self):
         return ", ".join([player.name for player in self.players])
@@ -97,6 +117,5 @@ if __name__ == '__main__':
         p = Player(t_name, t_points, t_salary, t_team)
         pool.add_player(p)
 
-    # print(pool)
-    pool.build_rosters()
+    pool.top_roster()
     print('ended')
